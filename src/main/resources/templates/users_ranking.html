@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html xmlns:th="http://thymeleaf.org">
+
+<head th:include="_template :: head"></head>
+
+<body>
+	<h1>Epic Task</h1>
+	
+	<nav th:include="_template :: menu('user_ranking')"></nav>
+	
+<div class="content">
+
+	<span class="alert" th:if="${message != null}" th:text="${message}"></span>
+
+	<div class="user" th:each="user : ${users}">
+		<img class="avatar" alt="" th:src="${user.avatar}">
+		<div class="user-info">
+			<h4 th:text="${user.name}"></h4>
+			<p th:text="${user.email}"></p>
+			<p th:text="${user.point}"></p>
+		</div>
+	</div>
+	
+	<div>
+		<a th:if="${!users.first}" 
+			th:href="@{/user(page=${users.number-1} , size=${users.size} , sort=${sort} )}" th:text="#{form.label.anterior}"></a>
+		<span th:text="${(users.number+1) + ' de ' + users.totalPages}"></span>
+		<a th:if="${!users.last}" 
+			th:href="@{/user(page=${users.number+1} , size=${users.size} , sort=${sort} )}" th:text="#{form.label.proxima}"></a>
+	</div>
+	
+	<div>
+		<details>
+			<summary th:text="#{form.label.paginacao}"> </summary>
+			<ul>
+				<li><a th:href="@{/user(page=${users.number} , size=5 , sort=${sort} )}" th:text="#{form.label.cincoUsuariosPagina}"></a></li>
+				<li><a th:href="@{/user(page=${users.number} , size=10 , sort=${sort} )}" th:text="#{form.label.dezUsuariosPagina}"></a></li>
+				<li><a th:href="@{/user(page=${users.number} , size=20 , sort=${sort} )}" th:text="#{form.label.vinteUsuariosPagina}"></a></li>
+			</ul>
+		</details>
+	</div>
+	
+		
+</div>
+
+	
+</body>
+</html>
